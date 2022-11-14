@@ -22,7 +22,7 @@ export class ReportsService {
     report.approved = approve;
     return this.repo.save(report);
   }
-  async getEstimate({ make, mileage, lat, long, model, year }: GetEstimateDto) {
+  getEstimate({ make, mileage, lat, long, model, year }: GetEstimateDto) {
     return this.repo
       .createQueryBuilder()
       .select('AVG(price)', 'price')
@@ -35,5 +35,8 @@ export class ReportsService {
       .setParameters({ mileage })
       .limit(3)
       .getRawOne();
+  }
+  getAllReports() {
+    return this.repo.createQueryBuilder().select('*').getRawMany();
   }
 }
